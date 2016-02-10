@@ -7,6 +7,7 @@ class CreateEncryptedKeyValueStoreTable < ActiveRecord::Migration
       t.string  :group
       t.string  :name
       t.text    :encrypted_value
+      t.string  :value_type
     end
   end
   

@@ -4,7 +4,7 @@ This is a gem to add a key/value store into your Rails app. The values are encry
 
 To set the encryption key, set the `EKVS_KEY` environment variable with a random string (I like to use `SecureRandom.base64(50)` to generate one).
 
-If the `EKVS_KEY` environment variable isn't set then the Rails `Rails.application.secrets.secret_key_base` will be used to encrypt the `value` field.
+If the `EKVS_KEY` environment variable isn't set then the Rails `Rails.application.secrets.secret_key_base` will be used.
 
 ## Setup
 
