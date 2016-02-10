@@ -1,36 +1,38 @@
-# EncryptedKeyValueStore
+# EncryptedKeyValueStore 🔐
 
 `encrypted_key_value_store` is a gem to 
 
-Some of this code is from [aTech Media](https://github.com/atech/nifty-key-value-store), modified for encryption and tested with RSpec.
+Some of this code is originally from [aTech Media](https://github.com/atech/nifty-key-value-store), but has been modified for encryption.
 
-## Installation
+This gem uses the [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) gem.
 
-Add this line to your application's Gemfile:
+To set the encryption key, set the `EKVS_KEY` environment variable with a random string (I like to use `SecureRandom.base64(50)` to generate one).
+
+If the `EKVS_KEY` environment variable isn't set then the Rails `Rails.application.secrets.secret_key_base` will be used to encrypt the `value` field.
+
+Add the gem to the Gemfile
 
 ```ruby
 gem 'encrypted_key_value_store'
 ```
 
-And then execute:
+And generate the database table
 
-    $ bundle
+```bash
+rails generate encrypted_key_value_store:migration
+rake db:migrate
+```
 
-Or install it yourself as:
+```ruby
+class User < ActiveRecord::Base
+  key_value_store :details
+end
 
-    $ gem install encrypted_key_value_store
+user = User.new
+user.details   = {first_name: "Dean", last_name: "Perry"}
+user.save
 
-## Usage
+user.details   #=> {"first_name" => "Dean", "last_name" => "Perry"}
+```
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/encrypted_key_value_store. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+If you look the database, the value is encrypted in the `encrypted_value` column.

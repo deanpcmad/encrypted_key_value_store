@@ -6,7 +6,9 @@ module EncryptedKeyValueStore
 
     belongs_to :parent, polymorphic: true
 
-    attr_encrypted :value, key: "abc123"
+    key = ENV["EKVS_KEY"] || Rails.application.secrets.secret_key_base
+
+    attr_encrypted :value, key: key
 
   end
   
