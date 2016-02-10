@@ -33,17 +33,16 @@ module EncryptedKeyValueStore
           define_method "#{name}=" do |value|
             instance_variable_set("@#{name}", value)
           end
+
         end
+
       end
 
     end
 
     # Get the values for a given group as a hash from the database without caching
     def get_custom_values_for(group)
-      encrypted_key_value_pairs.where(group: group).inject({}) do |hash, value|
-        hash[value.name] = value.value
-        hash
-      end
+      encrypted_key_value_pairs.where(group: group).to_hash
     end
 
     # Save all custom values in the appropriate methods to the 
