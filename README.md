@@ -27,13 +27,15 @@ class User < ActiveRecord::Base
 end
 
 user = User.new
-user.details   = {first_name: "Dean", last_name: "Perry"}
+user.details   = {first_name: "Dean", last_name: "Perry", age: 24, date_of_birth: Date.today}
 user.save
 
-user.details   #=> {"first_name" => "Dean", "last_name" => "Perry"}
+user.details   #=> {"first_name"=>"Dean", "last_name"=>"Perry", "age"=>24, "date_of_birth"=>Wed, 10 Feb 2016}
 ```
 
 If you look the database, the value is encrypted in the `encrypted_value` column.
+
+![](https://files.deanpcmad.com/2016/Screen-Shot-2016-02-10-22-18-01.png)
 
 ## Details
 
