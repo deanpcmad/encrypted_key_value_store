@@ -23,6 +23,7 @@ silence_stream(STDOUT) do
       t.string   :group
       t.string   :name
       t.text     :encrypted_value
+      t.string   :value_type
     end
   end
 end
@@ -42,10 +43,10 @@ class EncryptedKeyValueStoreTest < Minitest::Test
 
   def test_should_save_encrypted_values
     @kvp = KeyValuePair.create parent: User.create(name: "test"), name: "data", value: "test-value"
-    assert @kvp.save
 
     refute_nil @kvp.encrypted_value
 
+    assert_equal "test-value", @kvp.value
     refute_equal "test-value", @kvp.encrypted_value
   end
 

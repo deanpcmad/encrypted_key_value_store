@@ -10,12 +10,6 @@ module EncryptedKeyValueStore
         ::ActiveRecord::Base.send :include, EncryptedKeyValueStore::ModelExtension
       end
 
-      # Load the ActionView helpers
-      ActiveSupport.on_load(:action_view) do
-        require "encrypted_key_value_store/view_helpers"
-        ActionView::Base.send :include, EncryptedKeyValueStore::ViewHelpers
-      end
-      
     end
     
     generators do
